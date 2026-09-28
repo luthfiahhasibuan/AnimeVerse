@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:praktik_2/screens/signin_screen.dart';
+import 'package:praktik_2/screens/profile_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Anime Verse',
       theme: ThemeData(fontFamily: 'Urbanist'),
-      home: const SignInScreen(),
+      home: const ProfileScreen(),
       debugShowCheckedModeBanner: false,
     );
   }
