@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import '../widgets/app_scaffold.dart';
 
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
+
+import '../config/routes.dart';
 
 class SignInScreen extends StatelessWidget {
   const SignInScreen({super.key});
@@ -172,7 +175,10 @@ class SignInScreen extends StatelessWidget {
                       width: double.infinity,
                       height: screenHeight * 0.075,
                       child: ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          context.go(AppRoutes.home);
+                        },
+
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.blue.withValues(alpha: 0.8),
                           foregroundColor: Colors.white,
@@ -242,7 +248,9 @@ class SignInScreen extends StatelessWidget {
                           ),
                         ),
                         TextButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            context.go(AppRoutes.signUp);
+                          },
                           child: Text(
                             'Sign Up',
                             style: TextStyle(

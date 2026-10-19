@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import '../widgets/app_scaffold.dart';
 
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
+
+import '../config/routes.dart';
 
 class SignUpScreen extends StatelessWidget {
   const SignUpScreen({super.key});
@@ -167,12 +170,14 @@ class SignUpScreen extends StatelessWidget {
                     ),
                     SizedBox(height: screenHeight * 0.03),
 
-                    //Sign In Button
+                    //Sign Up Button
                     SizedBox(
                       width: double.infinity,
                       height: screenHeight * 0.075,
                       child: ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          context.go(AppRoutes.home);
+                        },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.blue.withValues(alpha: 0.8),
                           foregroundColor: Colors.white,
@@ -230,7 +235,7 @@ class SignUpScreen extends StatelessWidget {
                     ),
                     SizedBox(height: screenHeight * 0.04),
 
-                    //Don't have an account? Sign Up
+                    //Already have an account? Sign In
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -242,7 +247,9 @@ class SignUpScreen extends StatelessWidget {
                           ),
                         ),
                         TextButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            context.go(AppRoutes.signIn);
+                          },
                           child: Text(
                             'Sign In',
                             style: TextStyle(
