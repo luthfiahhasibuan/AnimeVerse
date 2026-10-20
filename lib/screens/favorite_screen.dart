@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
 import '../providers/app_state_provider.dart';
 import '../widgets/app_scaffold.dart';
 import '../widgets/favorite_anime_card.dart';
@@ -34,29 +35,35 @@ class FavoriteScreen extends StatelessWidget {
           // Favorite Anime List
           Expanded(
             child: Consumer<AppStateProvider>(
-              builder: (context, favoriteProvider, child){
+              builder: (context, favoriteProvider, child) {
                 final favorites = favoriteProvider.favorites;
 
-                if (favorites.isEmpty){
+                if (favorites.isEmpty) {
                   return const Center(
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Icon(Icons.favorite_border, size: 32, color: Colors.white70),
+                        Icon(
+                          Icons.favorite_border,
+                          size: 32,
+                          color: Colors.white70,
+                        ),
                         SizedBox(height: 8),
-                        Text('Belum ada anime favorit', style: TextStyle(color: Colors.white70, fontSize: 16))
-                      ]
-                    )
+                        Text(
+                          'Belum ada anime favorit',
+                          style: TextStyle(color: Colors.white70, fontSize: 16),
+                        ),
+                      ],
+                    ),
                   );
                 }
                 return ListView.builder(
-                  padding: EdgeInsets.symmetric(
-                    vertical: screenHeight * 0.01,
-                  ),
+                  padding: EdgeInsets.symmetric(vertical: screenHeight * 0.01),
                   itemCount: favorites.length,
                   itemBuilder: (context, index) {
                     final anime = favorites[index];
                     return FavoriteAnimeCard(
+                      id: anime.id,
                       title: anime.title,
                       genre: anime.genre,
                       rating: anime.rating,
@@ -64,7 +71,7 @@ class FavoriteScreen extends StatelessWidget {
                     );
                   },
                 );
-              }
+              },
             ),
           ),
         ],

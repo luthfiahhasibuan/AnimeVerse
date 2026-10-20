@@ -48,7 +48,7 @@ class AppStateProvider extends ChangeNotifier {
   //simpan data favorit ke SharedPreferences
   Future<void> _saveFavorites() async {
     try {
-      final prefs = await SharedPrefences.getInstance();
+      final prefs = await SharedPreferences.getInstance();
 
       //1. list <anime> : list<MAp<Sring, dynamic>>
       final List<Map<String, dynamic>> favoritesJson = _favorites
