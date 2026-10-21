@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:praktik_2/widgets/genre_list.dart';
+
 import '../widgets/anime_view.dart';
 import '../widgets/app_scaffold.dart';
+
+import 'package:provider/provider.dart';
+
+import '../providers/app_state_provider.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -10,6 +15,8 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
+    final provider = context.watch<AppStateProvider>();
+    final filteredAnime = provider.getFilteredAnimeForHome();
     return AppScaffold(
       appBar: AppBar(
         title: Text(
@@ -80,9 +87,17 @@ class HomeScreen extends StatelessWidget {
                 ),
               ),
             ),
-            const GenreList(),
+
+            //const GenreList(), //sebelum
+            GenreList(
+              selected: provider.selectedGenre,
+              onGenreSelected: (genre) {
+                provider.setSelectedGenre(genre);
+              }, //sesudah
+            ),
             SizedBox(height: screenHeight * 0.03),
-            const AnimeView(),
+            //const AnimeView(),//sebelum
+            AnimeView(animeList: filteredAnime),
             SizedBox(height: screenHeight * 0.025),
           ],
         ),

@@ -5,6 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../models/anime.dart';
+import '../data/dummy_data.dart';
 
 class AppStateProvider extends ChangeNotifier {
   //data
@@ -17,6 +18,18 @@ class AppStateProvider extends ChangeNotifier {
   }
   //getter
   List<Anime> get favorites => _favorites;
+
+  //state baru: genre yang dipilih (default 'all')
+  String _selectedGenre = "All";
+
+  //getter baru
+  String get selectedGenre => _selectedGenre;
+
+  //method baru: mengubah genre yang dipilih
+  void setSelectedGenre(String genre) {
+    _selectedGenre = genre;
+    notifyListeners(); //beri tahu HomeScreen & GenreList
+  }
 
   //helper
   bool isFavorite(String id) {
@@ -43,6 +56,18 @@ class AppStateProvider extends ChangeNotifier {
     _favorites.removeWhere((anime) => anime.id == id);
     _saveFavorites();
     notifyListeners();
+  }
+
+  List<Anime> getFilteredAnimeForHome() {
+    List<Anime> result = DummyData.animeList;
+
+    if (_selectedGenre != "All") {
+      result = result.where((anime) {
+        final genres = anime.genre.split(',').map((g) => g.trim()).toList();
+        return genres.contains(_selectedGenre);
+      }).toList();
+    }
+    return result;
   }
 
   //simpan data favorit ke SharedPreferences
