@@ -31,6 +31,25 @@ class AppStateProvider extends ChangeNotifier {
     notifyListeners(); //beri tahu HomeScreen & GenreList
   }
 
+  //State BARU: query pencarian (dipisah per layar)
+  String _homeSearchQuery = "";
+  String _favoriteSearchQuery = "";
+
+  String get homeSearchQuery => _homeSearchQuery;
+  String get favoriteSearchQuery => _favoriteSearchQuery;
+
+  // update query pencarian HomeScreen
+  void setHomeSearchQuery(String query) {
+    _homeSearchQuery = query;
+    notifyListeners();
+  }
+
+  // update query pencarian FavoriteScreen
+  void setFavoriteSearchQuery(String query) {
+    _favoriteSearchQuery = query;
+    notifyListeners();
+  }
+
   //helper
   bool isFavorite(String id) {
     return _favorites.any((anime) => anime.id == id);
@@ -60,11 +79,35 @@ class AppStateProvider extends ChangeNotifier {
 
   List<Anime> getFilteredAnimeForHome() {
     List<Anime> result = DummyData.animeList;
-
+    //Terapkan filter genre
     if (_selectedGenre != "All") {
       result = result.where((anime) {
         final genres = anime.genre.split(',').map((g) => g.trim()).toList();
         return genres.contains(_selectedGenre);
+      }).toList();
+    }
+
+    //terapkan filter search (setelah filter genre)
+    if (_homeSearchQuery.isNotEmpty) {
+      result = result.where((anime) {
+        return anime.title.toLowerCase().contains(
+          _homeSearchQuery.toLowerCase(),
+        );
+      }).toList();
+    }
+    return result;
+  }
+
+  //ambil favorit yang sudah difiltar (berdasarkan pencarian favorit)
+  List<Anime> getFilteredFavorites() {
+    List<Anime> result = _favorites;
+
+    //terapkan filter search favorit
+    if (_favoriteSearchQuery.isNotEmpty) {
+      result = result.where((anime) {
+        return anime.title.toLowerCase().contains(
+          _favoriteSearchQuery.toLowerCase(),
+        );
       }).toList();
     }
     return result;
